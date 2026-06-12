@@ -1,0 +1,5 @@
+Analyzing prime...                                              
+
+  error - Too many positional arguments: 0 expected, but 2 found - lib\main.dart:887:11 - extra_positional_arguments_could_be_named
+  error - Expected to find ')' - lib\main.dart:888:1938 - expected_token
+
