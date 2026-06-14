@@ -2,8 +2,6 @@
 
 **Prime** é um aplicativo mobile focado em ajudar pessoas a superarem vícios e construírem hábitos saudáveis. Com uma interface moderna, tema escuro AMOLED e gamificação, o app oferece ferramentas de monitoramento, motivação e reflexão pessoal.
 
-> Desenvolvido como Trabalho de Conclusão de Curso (TCC), unindo conceitos de *I Am Sober* e *Todoist* adaptados para o contexto de recuperação pessoal.
-
 ---
 
 ## ✨ Funcionalidades
@@ -34,9 +32,3 @@
 
 ---
 
-## 🚀 Tecnologias
-
-- [Flutter](https://flutter.dev) (Dart)
-- [Provider](https://pub.dev/packages/provider) – gerenciamento de estado
-- [SharedPreferences](https://pub.dev/packages/shared_preferences) – persistência local
-- [intl](https://pub.dev/packages/intl) – internacionalização
