@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../models/anotacao_diaria.dart';
 import '../providers/app_state.dart';
+import '../l10n/app_localizations.dart';
 
 class AnotacaoDialog extends StatefulWidget {
   final DateTime data;
@@ -12,110 +13,59 @@ class AnotacaoDialog extends StatefulWidget {
 }
 
 class _AnotacaoDialogState extends State<AnotacaoDialog> {
-  final _formKey = GlobalKey<FormState>();
-  late String _humor;
-  final _desafiosCtrl = TextEditingController();
-  final _vitoriasCtrl = TextEditingController();
-  final _aprendizadoCtrl = TextEditingController();
-  double _energia = 5;
-  double _ansiedade = 5;
-
-  List<String> humores = ['Feliz', 'Neutro', 'Triste', 'Ansioso', 'Motivado'];
+  final _textoDiaCtrl = TextEditingController();
 
   @override
   void initState() {
     super.initState();
     final existente = context.read<AppState>().getAnotacaoDoDia(widget.data);
     if (existente != null) {
-      _humor = existente.humor ?? humores[0];
-      _desafiosCtrl.text = existente.desafios ?? '';
-      _vitoriasCtrl.text = existente.vitorias ?? '';
-      _aprendizadoCtrl.text = existente.aprendizado ?? '';
-      _energia = existente.nivelEnergia;
-      _ansiedade = existente.nivelAnsiedade;
-    } else {
-      _humor = humores[0];
+      _textoDiaCtrl.text = existente.textoDia ?? '';
     }
   }
 
   @override
   void dispose() {
-    _desafiosCtrl.dispose();
-    _vitoriasCtrl.dispose();
-    _aprendizadoCtrl.dispose();
+    _textoDiaCtrl.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     final appState = context.read<AppState>();
+    final local = AppLocalizations.of(context);
     return AlertDialog(
       backgroundColor: Colors.grey[900],
-      title: Text('Anotação ${widget.data.day}/${widget.data.month}',
-          style: TextStyle(color: appState.corPrimaria)),
+      title: Text(
+        '${local.translate('annotation_title')} ${widget.data.day}/${widget.data.month}/${widget.data.year}',
+        style: TextStyle(color: appState.corPrimaria),
+      ),
       content: SingleChildScrollView(
-        child: Form(
-          key: _formKey,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              DropdownButtonFormField<String>(
-                initialValue: _humor,
-                dropdownColor: Colors.black,
-                style: TextStyle(color: appState.corPrimaria),
-                items: humores
-                    .map((h) => DropdownMenuItem(value: h, child: Text(h)))
-                    .toList(),
-                onChanged: (v) => _humor = v!,
-                decoration: const InputDecoration(labelText: 'Humor'),
-              ),
-              TextFormField(
-                  controller: _desafiosCtrl,
-                  decoration: const InputDecoration(labelText: 'Desafios')),
-              TextFormField(
-                  controller: _vitoriasCtrl,
-                  decoration: const InputDecoration(labelText: 'Vitórias')),
-              TextFormField(
-                  controller: _aprendizadoCtrl,
-                  decoration: const InputDecoration(labelText: 'Aprendizado')),
-              const SizedBox(height: 12),
-              Text('Nível de energia: ${_energia.round()}'),
-              Slider(
-                  value: _energia,
-                  min: 1,
-                  max: 10,
-                  divisions: 9,
-                  onChanged: (v) => _energia = v),
-              Text('Nível de ansiedade: ${_ansiedade.round()}'),
-              Slider(
-                  value: _ansiedade,
-                  min: 1,
-                  max: 10,
-                  divisions: 9,
-                  onChanged: (v) => _ansiedade = v),
-            ],
+        child: TextField(
+          controller: _textoDiaCtrl,
+          maxLines: 5,
+          autofocus: true,
+          style: TextStyle(color: appState.corPrimaria),
+          decoration: InputDecoration(
+            labelText: local.translate('what_happened'),
+            labelStyle: TextStyle(color: appState.corPrimaria),
+            enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: appState.corPrimaria)),
+            focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: appState.corPrimaria)),
           ),
         ),
       ),
       actions: [
-        TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('Cancelar')),
+        TextButton(onPressed: () => Navigator.pop(context), child: Text(local.translate('cancel'))),
         TextButton(
           onPressed: () {
             final anotacao = AnotacaoDiaria(
               data: widget.data,
-              humor: _humor,
-              desafios: _desafiosCtrl.text,
-              vitorias: _vitoriasCtrl.text,
-              aprendizado: _aprendizadoCtrl.text,
-              nivelEnergia: _energia,
-              nivelAnsiedade: _ansiedade,
+              textoDia: _textoDiaCtrl.text,
             );
             appState.adicionarOuAtualizarAnotacao(anotacao);
             Navigator.pop(context);
           },
-          child: const Text('Salvar'),
+          child: Text(local.translate('save_annotation')),
         ),
       ],
     );

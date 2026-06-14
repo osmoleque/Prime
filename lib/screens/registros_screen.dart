@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 import '../providers/app_state.dart';
-import '../models/anotacao_diaria.dart'; // ← import necessário
-import '../widgets/anotacao_dialog.dart';
+import '../l10n/app_localizations.dart';
+import '../models/anotacao_diaria.dart';
 
 class RegistrosScreen extends StatelessWidget {
   const RegistrosScreen({super.key});
@@ -11,13 +11,15 @@ class RegistrosScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final appState = context.watch<AppState>();
+    final local = AppLocalizations.of(context);
     final cor = appState.corPrimaria;
     final anotacoes = List<AnotacaoDiaria>.from(appState.anotacoes);
 
-    // Ordenar por data decrescente (mais recentes primeiro)
     if (anotacoes.isNotEmpty) {
       anotacoes.sort((a, b) => b.data.compareTo(a.data));
     }
+
+    final locale = Localizations.localeOf(context);
 
     return Scaffold(
       body: SafeArea(
@@ -27,46 +29,38 @@ class RegistrosScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Registros de Anotações',
-                style: TextStyle(
-                    fontSize: 22, fontWeight: FontWeight.bold, color: cor),
+                local.translate('registros_title'),
+                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: cor),
               ),
               const SizedBox(height: 16),
               Expanded(
                 child: anotacoes.isEmpty
                     ? Center(
                         child: Text(
-                          'Nenhuma anotação registrada.\nUse o botão "Anotar dia" na tela de Vícios.',
+                          local.translate('no_records'),
                           textAlign: TextAlign.center,
-                          style: TextStyle(color: Colors.white38),
+                          style: TextStyle(color: Colors.white70),
                         ),
                       )
                     : ListView.builder(
                         itemCount: anotacoes.length,
                         itemBuilder: (_, index) {
-                          final anotacao = anotacoes[index];
+                          final a = anotacoes[index];
                           return Card(
                             color: Colors.white10,
                             margin: const EdgeInsets.only(bottom: 8),
                             child: ListTile(
                               title: Text(
-                                DateFormat('dd/MM/yyyy').format(anotacao.data),
-                                style: TextStyle(
-                                    color: cor, fontWeight: FontWeight.bold),
+                                DateFormat('dd/MM/yyyy', locale.toString()).format(a.data),
+                                style: TextStyle(color: cor, fontWeight: FontWeight.bold),
                               ),
-                              subtitle: Text(
-                                anotacao.humor ?? 'Sem humor',
-                                style: TextStyle(
-                                    color: cor.withValues(alpha: 0.7)),
-                              ),
-                              trailing: Icon(Icons.edit_note, color: cor),
-                              onTap: () {
-                                showDialog(
-                                  context: context,
-                                  builder: (_) =>
-                                      AnotacaoDialog(data: anotacao.data),
-                                );
-                              },
+                              subtitle: a.textoDia != null && a.textoDia!.isNotEmpty
+                                  ? Text(
+                                      a.textoDia!,
+                                      style: TextStyle(color: Colors.white70),
+                                    )
+                                  : null,
+                              trailing: Icon(Icons.visibility, color: cor.withValues(alpha: 0.5)),
                             ),
                           );
                         },

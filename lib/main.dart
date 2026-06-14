@@ -3,6 +3,9 @@ import 'package:provider/provider.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'providers/app_state.dart';
 import 'screens/inicio_screen.dart';
+import 'screens/language_selection_screen.dart';
+import 'screens/onboarding_screen.dart';
+import 'l10n/app_localizations.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,18 +25,32 @@ class MeuApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final appState = context.watch<AppState>();
+
+    Widget home;
+    if (appState.onboardingCompleto) {
+      home = const InicioScreen();
+    } else if (appState.idiomaSelecionado) {
+      home = const OnboardingScreen();
+    } else {
+      home = const LanguageSelectionScreen();
+    }
+
     return MaterialApp(
+      key: ValueKey(appState.idioma),
       title: '',
       debugShowCheckedModeBanner: false,
       localizationsDelegates: const [
+        AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: const [
         Locale('pt', 'BR'),
+        Locale('en', 'US'),
+        Locale('es', 'ES'),
       ],
-      locale: const Locale('pt', 'BR'),
+      locale: Locale(appState.idioma.split('_')[0], appState.idioma.split('_')[1]),
       theme: ThemeData(
         brightness: Brightness.dark,
         scaffoldBackgroundColor: Colors.black,
@@ -64,8 +81,13 @@ class MeuApp extends StatelessWidget {
         textButtonTheme: TextButtonThemeData(
           style: TextButton.styleFrom(foregroundColor: appState.corPrimaria),
         ),
+        pageTransitionsTheme: const PageTransitionsTheme(
+          builders: {
+            TargetPlatform.android: FadeUpwardsPageTransitionsBuilder(),
+          },
+        ),
       ),
-      home: const InicioScreen(),
+      home: home,
     );
   }
 }
