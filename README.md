@@ -34,7 +34,7 @@ Todas as suas informações ficam salvas apenas no seu dispositivo (usando **Sha
 
 ## 🎯 Propósito do Projeto
 
-Este aplicativo foi desenvolvido como trabalho de conclusão de curso (TCO) com o objetivo de unir conceitos de desenvolvimento mobile, experiência do usuário e gamificação da produtividade. O Prime demonstra como um app bem estruturado pode auxiliar pessoas a criarem rotinas mais saudáveis e se tornarem mais conscientes de seus comportamentos.
+Este aplicativo foi desenvolvido como trabalho com o objetivo de unir conceitos de desenvolvimento mobile, experiência do usuário e gamificação da produtividade. O Prime demonstra como um app bem estruturado pode auxiliar pessoas a criarem rotinas mais saudáveis e se tornarem mais conscientes de seus comportamentos.
 
 ---
 
