@@ -1,18 +1,42 @@
-# prime
+# Prime – App de Controle de Vícios e Hábitos
 
-A new Flutter project.
+**Prime** é um aplicativo mobile focado em ajudar pessoas a superarem vícios e construírem hábitos saudáveis. Com uma interface moderna, tema escuro AMOLED e gamificação, o app oferece ferramentas de monitoramento, motivação e reflexão pessoal.
 
-## Getting Started
+> Desenvolvido como Trabalho de Conclusão de Curso (TCC), unindo conceitos de *I Am Sober* e *Todoist* adaptados para o contexto de recuperação pessoal.
 
-This project is a starting point for a Flutter application.
+---
 
-A few resources to get you started if this is your first Flutter project:
+## ✨ Funcionalidades
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
+- 📅 **Monitoramento de abstinências**  
+  Cadastro de vícios personalizados com contagem de dias limpos, registro de recaídas e histórico visual no calendário.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
-# prime
+- 🏆 **Gamificação**  
+  Conquistas automáticas por marcos de dias (1, 7, 30, 90, 365), sistema de níveis e XP para motivar a jornada.
+
+- 📝 **Anotações diárias**  
+  Registre seus sentimentos, desafios e vitórias a cada dia. Histórico completo acessível na aba de registros.
+
+- ✅ **Tarefas e hábitos**  
+  Criação de tarefas personalizadas, sugestões de rotinas saudáveis e modelos reutilizáveis para facilitar o dia a dia.
+
+- 🌍 **Multi‑idiomas**  
+  Tradução completa para **Português**, **Inglês** e **Espanhol**, incluindo as frases motivacionais.
+
+- 🎨 **Personalização**  
+  Tema escuro AMOLED com cor principal customizável (branco, azul, verde, etc.).
+
+- 🧘 **Onboarding guiado**  
+  Tutorial inicial que ajuda o usuário a configurar seu primeiro vício, tarefas e preferências.
+
+- 📴 **100% offline**  
+  Todos os dados são salvos localmente com SharedPreferences – sem necessidade de internet.
+
+---
+
+## 🚀 Tecnologias
+
+- [Flutter](https://flutter.dev) (Dart)
+- [Provider](https://pub.dev/packages/provider) – gerenciamento de estado
+- [SharedPreferences](https://pub.dev/packages/shared_preferences) – persistência local
+- [intl](https://pub.dev/packages/intl) – internacionalização
